@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0;
+  }
+  
+  /* p5 canvas centered */
+  .p5Canvas {
+    display: block;
+    margin: auto;
+    background: white;
+  }
+  
+  /* style dat.GUI panel — move it down & to the right */
+  /*
+  .dg.ac {
+    top: auto !important;
+    bottom: 20px;
+    right: 20px;
+    left: auto !important;
+  }
+    */
