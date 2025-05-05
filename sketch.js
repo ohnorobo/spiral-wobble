@@ -6,7 +6,8 @@ let params = {
   };
   
   function setup() {
-    createCanvas(600, 600, SVG);
+    const canvas = createCanvas(600, 600, SVG);
+    canvas.parent(select('div[p5]'));
 
     noFill();
     stroke(0);
