@@ -1,7 +1,11 @@
+let NOISEMAX = 1000;
+
 let params = {
-    turns: 5,
-    spacing: 10,
+    turns: 45,
+    spacing: 1,
     lineWeight: 2,
+    wobbleStrength: 5,
+    noiseSeed: 0,
     exportSVG: function() { exportCurrentSVG('spiral.svg'); }
   };
   
@@ -22,13 +26,22 @@ let params = {
     clear(); // clear canvas for SVG redraw
     translate(width / 2, height / 2);
     strokeWeight(params.lineWeight);
+
+    noiseSeed(params.noiseSeed); // Set the noise seed for consistent results
   
     beginShape();
     let angleStep = 0.1;
     for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
       let r = params.spacing * a;
-      let x = r * cos(a);
-      let y = r * sin(a);
+
+      // Get Perlin noise to create a wobbly effect
+      let noiseX = noise(a, r); // Use angle and radius for noise coordinates
+      let noiseY = noise(a + NOISEMAX, r + NOISEMAX); // Use different noise coordinates for X and Y
+      noiseX = map(noiseX, 0, 1, -1, 1); // Map noise from 0-1 to -1-1
+      noiseY = map(noiseY, 0, 1, -1, 1);
+      
+      let x = r * cos(a) + noiseX * params.wobbleStrength;
+      let y = r * sin(a) + noiseY * params.wobbleStrength;
       vertex(x, y);
     }
     endShape();
@@ -36,9 +49,15 @@ let params = {
   
   function setupGUI() {
     const gui = new dat.GUI();
-    gui.add(params, 'turns', 1, 20, 1).name('Turns').onChange(redraw);
+    gui.add(params, 'turns', 1, 100, 1).name('Turns').onChange(redraw);
     gui.add(params, 'spacing', 1, 20, 1).name('Spacing').onChange(redraw);
     gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onChange(redraw);
+    gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onChange(redraw);
+
+    // Add a button to randomize noiseSeed
+    gui.add(params, 'noiseSeed', 0, NOISEMAX, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
+    gui.add({ randomize: () => { params.noiseSeed = floor(random(0, NOISEMAX + 1)); redraw(); } }, 'randomize').name('Randomize Noise Seed');
+    
     gui.add(params, 'exportSVG').name('Export SVG');
     noLoop(); // only redraw when parameters change
   }
