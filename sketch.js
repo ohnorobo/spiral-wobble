@@ -3,6 +3,7 @@ let NOISEMAX = 1000;
 let params = {
     turns: 45,
     spacing: 1,
+    stepLength: 5,
     lineWeight: 2,
     wobbleStrength: 5,
     noiseSeed: 0,
@@ -29,11 +30,17 @@ let params = {
     translate(width / 2, height / 2);
 
     beginShape();
-    let angleStep = 0.1;
+    const arcLengthStep = 5; // The distance between points along the spiral's path
+    let angle = 0.1;
+
     // angle increases above 360 degrees to create multiple turns
-    for (let angle = angleStep; angle < params.turns * TWO_PI; angle += angleStep) {
+    while (angle < params.turns * TWO_PI) {
       // Archimedian spiral
       let radius = params.spacing * angle;
+      // Make the angle step inversely proportional to the radius
+      const angleStep = min(0.5, arcLengthStep / radius);
+      angle += angleStep;
+
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
