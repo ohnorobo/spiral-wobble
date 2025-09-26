@@ -30,20 +30,21 @@ let params = {
 
     beginShape();
     let angleStep = 0.1;
-    for (let angle = 0; angle < params.turns * TWO_PI; angle += angleStep) {
+    // angle increases above 360 degrees to create multiple turns
+    for (let angle = angleStep; angle < params.turns * TWO_PI; angle += angleStep) {
       // Archimedian spiral
       let radius = params.spacing * angle;
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
       // Get perlin noise to create a wobbly effect
-      let noiseX = noise(x, y);
-      let noiseY = noise(x+1000, y+1000); // different noise
+      let noiseX = noise(spiralX, spiralY);
+      let noiseY = noise(spiralX+1000, spiralY+1000); // different noise
       noiseX = map(noiseX, 0, 1, -1, 1); // Map noise from 0-1 to -1-1
       noiseY = map(noiseY, 0, 1, -1, 1);
       
-      x = spiralX + noiseX * params.wobbleStrength;
-      y = spiralY + noiseY * params.wobbleStrength;
+      let x = spiralX + noiseX * params.wobbleStrength;
+      let y = spiralY + noiseY * params.wobbleStrength;
       vertex(x, y);
     }
     endShape();
