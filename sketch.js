@@ -37,12 +37,11 @@ let params = {
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
-      // Get perlin noise to create a wobbly effect
-      let noiseX = noise(spiralX, spiralY);
-      let noiseY = noise(spiralX+1000, spiralY+1000); // different noise
-      noiseX = map(noiseX, 0, 1, -1, 1); // Map noise from 0-1 to -1-1
-      noiseY = map(noiseY, 0, 1, -1, 1);
-      
+      const noiseAngle = map(noise(spiralX, spiralY), 0, 1, 0, TWO_PI);
+      const noiseMagnitude = noise(spiralX + 1000, spiralY + 1000); // independant noise
+      const noiseX = noiseMagnitude * cos(noiseAngle);
+      const noiseY = noiseMagnitude * sin(noiseAngle);
+
       let x = spiralX + noiseX * params.wobbleStrength;
       let y = spiralY + noiseY * params.wobbleStrength;
       vertex(x, y);
