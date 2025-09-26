@@ -37,8 +37,8 @@ let params = {
       let spiralY = radius * sin(angle)
 
       // Get perlin noise to create a wobbly effect
-      let noiseX = noise(angle);
-      let noiseY = noise(angle+100);
+      let noiseX = noise(x, y);
+      let noiseY = noise(x+1000, y+1000); // different noise
       noiseX = map(noiseX, 0, 1, -1, 1); // Map noise from 0-1 to -1-1
       noiseY = map(noiseY, 0, 1, -1, 1);
       
