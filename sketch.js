@@ -3,7 +3,7 @@ let NOISEMAX = 1000;
 let params = {
     turns: 45,
     spacing: 1,
-    stepLength: 10,
+    stepLength: 15,
     lineWeight: 2,
     wobbleStrength: 5,
     noiseSeed: 0,
@@ -40,16 +40,16 @@ let params = {
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
-      const noiseAngle = map(noise(spiralX, spiralY), 0, 1, 0, TWO_PI);
-      const noiseMagnitude = noise(spiralX + 1000, spiralY + 1000); // independant noise
-      const noiseX = noiseMagnitude * cos(noiseAngle);
-      const noiseY = noiseMagnitude * sin(noiseAngle);
+      const noiseX = map(noise(spiralX, spiralY), 0, 1, -1, 1);
+      // independant noise value
+      const noiseY = map(noise(spiralX + 10000, spiralY + 10000), 0, 1, -1, 1);
 
       let x = spiralX + noiseX * params.wobbleStrength;
       let y = spiralY + noiseY * params.wobbleStrength;
       vertex(x, y);
 
       // Make the angle step inversely proportional to the radius
+      // Add a minimum value to prevent an infinite loop if stepLength is too small or zero.
       const angleStep = min(0.5, params.stepLength / radius);
       angle += angleStep;
     }
