@@ -3,7 +3,7 @@ let NOISEMAX = 1000;
 let params = {
     turns: 45,
     spacing: 1,
-    stepLength: 5,
+    stepLength: 10,
     lineWeight: 2,
     wobbleStrength: 5,
     noiseSeed: 0,
@@ -30,16 +30,12 @@ let params = {
     translate(width / 2, height / 2);
 
     beginShape();
-    const arcLengthStep = 5; // The distance between points along the spiral's path
-    let angle = 0.1;
 
+    let angle = 0.1; // start a bit above 0 to avoid division by zero
     // angle increases above 360 degrees to create multiple turns
     while (angle < params.turns * TWO_PI) {
       // Archimedian spiral
       let radius = params.spacing * angle;
-      // Make the angle step inversely proportional to the radius
-      const angleStep = min(0.5, arcLengthStep / radius);
-      angle += angleStep;
 
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
@@ -52,6 +48,10 @@ let params = {
       let x = spiralX + noiseX * params.wobbleStrength;
       let y = spiralY + noiseY * params.wobbleStrength;
       vertex(x, y);
+
+      // Make the angle step inversely proportional to the radius
+      const angleStep = min(0.5, params.stepLength / radius);
+      angle += angleStep;
     }
     endShape();
   }
@@ -59,7 +59,8 @@ let params = {
   function setupGUI() {
     const gui = new dat.GUI();
     gui.add(params, 'turns', 1, 100, 1).name('Turns').onChange(redraw);
-    gui.add(params, 'spacing', 1, 20, 1).name('Spacing').onChange(redraw);
+    gui.add(params, 'spacing', 0, 20, 1).name('Spacing').onChange(redraw);
+    gui.add(params, 'stepLength', 0, 20, 1).name('Step Length').onChange(redraw);
     gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onChange(redraw);
     gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onChange(redraw);
 
