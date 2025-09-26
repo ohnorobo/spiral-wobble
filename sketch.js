@@ -21,27 +21,29 @@ let params = {
   }
   
   function draw() {
-    // Simple example drawing a spiral
-
-    clear(); // clear canvas for SVG redraw
-    translate(width / 2, height / 2);
+    clear();
+    noiseSeed(params.noiseSeed);
     strokeWeight(params.lineWeight);
+    
+    // start in the center
+    translate(width / 2, height / 2);
 
-    noiseSeed(params.noiseSeed); // Set the noise seed for consistent results
-  
     beginShape();
     let angleStep = 0.1;
-    for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
-      let r = params.spacing * a;
+    for (let angle = 0; angle < params.turns * TWO_PI; angle += angleStep) {
+      // Archimedian spiral
+      let radius = params.spacing * angle;
+      let spiralX = radius * cos(angle)
+      let spiralY = radius * sin(angle)
 
-      // Get Perlin noise to create a wobbly effect
-      let noiseX = noise(a, r); // Use angle and radius for noise coordinates
-      let noiseY = noise(a + NOISEMAX, r + NOISEMAX); // Use different noise coordinates for X and Y
+      // Get perlin noise to create a wobbly effect
+      let noiseX = noise(angle);
+      let noiseY = noise(angle+100);
       noiseX = map(noiseX, 0, 1, -1, 1); // Map noise from 0-1 to -1-1
       noiseY = map(noiseY, 0, 1, -1, 1);
       
-      let x = r * cos(a) + noiseX * params.wobbleStrength;
-      let y = r * sin(a) + noiseY * params.wobbleStrength;
+      x = spiralX + noiseX * params.wobbleStrength;
+      y = spiralY + noiseY * params.wobbleStrength;
       vertex(x, y);
     }
     endShape();
