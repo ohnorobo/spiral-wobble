@@ -43,9 +43,12 @@ let params = {
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
-      const noiseX = map(noise(spiralX, spiralY), 0, 1, -1, 1);
+      let noiseX = noise(spiralX, spiralY)
       // independant noise value
-      const noiseY = map(noise(spiralX + 10000, spiralY + 10000), 0, 1, -1, 1);
+      let noiseY = noise(spiralX + 10000, spiralY + 10000)
+      // map noise from 0-1 to -1 to 1
+      noiseX = map(noiseX, 0, 1, -1, 1);
+      noiseY = map(noiseY, 0, 1, -1, 1);
 
       let x = spiralX + noiseX * params.wobbleStrength;
       let y = spiralY + noiseY * params.wobbleStrength;
