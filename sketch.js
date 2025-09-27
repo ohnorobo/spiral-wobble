@@ -55,8 +55,8 @@ let params = {
       vertex(x, y);
 
       // Make the angle step inversely proportional to the radius
-      // Add a minimum value to prevent an infinite loop if stepLength is too small or zero.
-      const angleStep = min(0.5, params.stepLength / radius);
+      // Add a minimum value for performance
+      const angleStep = min(1, params.stepLength / radius);
       angle += angleStep;
 
       totalSegments++;
@@ -70,7 +70,7 @@ let params = {
     const gui = new dat.GUI();
     gui.add(params, 'turns', 1, 100, 1).name('Turns').onChange(redraw);
     gui.add(params, 'spacing', 0, 20, 1).name('Spacing').onChange(redraw);
-    gui.add(params, 'stepLength', 0, 20, 1).name('Step Length').onChange(redraw);
+    gui.add(params, 'stepLength', 1, 20, 1).name('Step Length').onChange(redraw);
     gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onChange(redraw);
     gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onChange(redraw);
 
