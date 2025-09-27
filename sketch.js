@@ -32,10 +32,13 @@ let params = {
     beginShape();
 
     let angle = 0.1; // start a bit above 0 to avoid division by zero
+    let radius = 0;
+    let totalSegments = 0;
     // angle increases above 360 degrees to create multiple turns
-    while (angle < params.turns * TWO_PI) {
+    // stop if we're way off the canvas
+    while (angle < params.turns * TWO_PI && abs(radius) < width) {
       // Archimedian spiral
-      let radius = params.spacing * angle;
+      radius = params.spacing * angle;
 
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
@@ -52,8 +55,12 @@ let params = {
       // Add a minimum value to prevent an infinite loop if stepLength is too small or zero.
       const angleStep = min(0.5, params.stepLength / radius);
       angle += angleStep;
+
+      totalSegments++;
     }
     endShape();
+
+    console.log(`Drew ${totalSegments} segments`);
   }
   
   function setupGUI() {
