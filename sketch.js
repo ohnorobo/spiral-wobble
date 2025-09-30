@@ -5,7 +5,8 @@ let params = {
     spacing: 1,
     stepLength: 15,
     lineWeight: 2,
-    wobbleStrength: 5,
+    wobbleStrength: 25,
+    noiseScale: 0.035,
     noiseSeed: 0,
     exportSVG: function() { exportCurrentSVG('spiral.svg'); }
   };
@@ -43,9 +44,9 @@ let params = {
       let spiralX = radius * cos(angle)
       let spiralY = radius * sin(angle)
 
-      let noiseX = noise(spiralX, spiralY)
+      let noiseX = noise(spiralX * params.noiseScale, spiralY * params.noiseScale)
       // independant noise value
-      let noiseY = noise(spiralX + 10000, spiralY + 10000)
+      let noiseY = noise((spiralX + 10000) * params.noiseScale, (spiralY + 10000) * params.noiseScale)
       // map noise from 0-1 to -1 to 1
       noiseX = map(noiseX, 0, 1, -1, 1);
       noiseY = map(noiseY, 0, 1, -1, 1);
@@ -76,6 +77,7 @@ let params = {
     gui.add(params, 'stepLength', 1, 20, 1).name('Step Length').onFinishChange(redrawOnFinish);
     gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onFinishChange(redrawOnFinish);
     gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onFinishChange(redrawOnFinish);
+    gui.add(params, 'noiseScale', 0.001, 0.1, 0.001).name('Noise Scale').onFinishChange(redrawOnFinish);
 
     // Add a button to randomize noiseSeed
     gui.add(params, 'noiseSeed', 0, NOISEMAX, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
