@@ -6,7 +6,7 @@ let params = {
     stepLength: 15,
     lineWeight: 2,
     wobbleStrength: 25,
-    noiseScale: 0.035,
+    noiseScale: 0.025,
     noiseSeed: 0,
     exportSVG: function() { exportCurrentSVG('spiral.svg'); }
   };
