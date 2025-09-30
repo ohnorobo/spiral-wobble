@@ -64,15 +64,16 @@ let params = {
     endShape();
 
     console.log(`Drew ${totalSegments} segments`);
+    console.log("redrew shape")
   }
   
   function setupGUI() {
     const gui = new dat.GUI();
-    gui.add(params, 'turns', 1, 100, 1).name('Turns').onChange(redraw);
-    gui.add(params, 'spacing', 0, 20, 1).name('Spacing').onChange(redraw);
-    gui.add(params, 'stepLength', 1, 20, 1).name('Step Length').onChange(redraw);
-    gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onChange(redraw);
-    gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onChange(redraw);
+    gui.add(params, 'turns', 1, 100, 1).name('Turns').onFinishChange(redraw);
+    gui.add(params, 'spacing', 0, 20, 1).name('Spacing').onFinishChange(redraw);
+    gui.add(params, 'stepLength', 1, 20, 1).name('Step Length').onFinishChange(redraw);
+    gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onFinishChange(redraw);
+    gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onFinishChange(redraw);
 
     // Add a button to randomize noiseSeed
     gui.add(params, 'noiseSeed', 0, NOISEMAX, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
