@@ -20,8 +20,12 @@ let params = {
     // Simple example drawing a spiral
 
     clear(); // clear canvas for SVG redraw
+    drawSpiral();
+  }
+
+  function drawSpiral() {
+    // move to center
     translate(width / 2, height / 2);
-    strokeWeight(params.lineWeight);
   
     beginShape();
     let angleStep = 0.1;
