@@ -1,3 +1,6 @@
+const width = 600;
+const height = 600;
+
 let params = {
     turns: 5,
     spacing: 10,
@@ -6,7 +9,7 @@ let params = {
   };
   
   function setup() {
-    const canvas = createCanvas(600, 600, SVG);
+    const canvas = createCanvas(width, height, SVG);
     canvas.parent(select('div[p5]'));
 
     noFill();
@@ -17,8 +20,6 @@ let params = {
   }
   
   function draw() {
-    // Simple example drawing a spiral
-
     clear(); // clear canvas for SVG redraw
     drawSpiral();
   }
