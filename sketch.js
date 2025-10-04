@@ -1,3 +1,6 @@
+const width = 600;
+const height = 600;
+
 let params = {
     turns: 5,
     spacing: 10,
@@ -6,7 +9,7 @@ let params = {
   };
   
   function setup() {
-    const canvas = createCanvas(600, 600, SVG);
+    const canvas = createCanvas(width, height, SVG);
     canvas.parent(select('div[p5]'));
 
     noFill();
@@ -17,11 +20,20 @@ let params = {
   }
   
   function draw() {
-    // Simple example drawing a spiral
-
     clear(); // clear canvas for SVG redraw
+    drawSpiral();
+  }
+
+  function drawSpiral() {
+    // clip the shape inside the SVG border
+    push();
+    function mask() {
+      rect(0, 0, width, width)
+    }
+    clip(mask);
+
+    // move to center
     translate(width / 2, height / 2);
-    strokeWeight(params.lineWeight);
   
     beginShape();
     let angleStep = 0.1;
@@ -32,6 +44,8 @@ let params = {
       vertex(x, y);
     }
     endShape();
+
+    pop();
   }
   
   function setupGUI() {
