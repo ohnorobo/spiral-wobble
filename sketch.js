@@ -25,6 +25,13 @@ let params = {
   }
 
   function drawSpiral() {
+    // clip the shape inside the SVG border
+    push();
+    function mask() {
+      rect(0, 0, width, width)
+    }
+    clip(mask);
+
     // move to center
     translate(width / 2, height / 2);
   
@@ -37,6 +44,8 @@ let params = {
       vertex(x, y);
     }
     endShape();
+
+    pop();
   }
   
   function setupGUI() {
