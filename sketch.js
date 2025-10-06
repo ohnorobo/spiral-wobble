@@ -25,13 +25,27 @@ function draw() {
   strokeWeight(params.lineWeight);
 
   clear(); // clear canvas for SVG redraw
-  drawSpiral();
+
+  drawShapeInsideBorder(drawSpiral);
+
   if (params.drawRegistrationMark) {
     drawRegistrationMark();
   }
 }
 
 function drawSpiral() {
+  beginShape();
+  let angleStep = 0.1;
+  for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
+    let r = params.spacing * a;
+    let x = r * cos(a);
+    let y = r * sin(a);
+    vertex(x, y);
+  }
+  endShape();
+}
+
+function drawShapeInsideBorder(shapeDrawingFunction) {
   // clip the shape inside the SVG border
   push();
   function mask() {
@@ -45,15 +59,7 @@ function drawSpiral() {
   // move to center
   translate(width/2, height/2);
 
-  beginShape();
-  let angleStep = 0.1;
-  for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
-    let r = params.spacing * a;
-    let x = r * cos(a);
-    let y = r * sin(a);
-    vertex(x, y);
-  }
-  endShape();
+  shapeDrawingFunction();
 
   pop();
 }
