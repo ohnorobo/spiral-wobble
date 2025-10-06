@@ -1,14 +1,18 @@
 const width = 700;
 const height = 700;
 
-let params = {
-  turns: 5,
-  spacing: 10,
-  lineWeight: 2,
-  border: 50,
-  drawRegistrationMark: true,
-  exportSVG: function() { exportCurrentSVG('spiral.svg'); }
-};
+// Simple spiral drawing example
+function drawSpiral() {
+  beginShape();
+  let angleStep = 0.1;
+  for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
+    let r = params.spacing * a;
+    let x = r * cos(a);
+    let y = r * sin(a);
+    vertex(x, y);
+  }
+  endShape();
+}
 
 function setup() {
   const canvas = createCanvas(width, height, SVG);
@@ -16,7 +20,6 @@ function setup() {
 
   noFill();
   stroke(0);
-  strokeWeight(params.lineWeight);
 
   setupGUI();
 }
@@ -31,18 +34,6 @@ function draw() {
   if (params.drawRegistrationMark) {
     drawRegistrationMark();
   }
-}
-
-function drawSpiral() {
-  beginShape();
-  let angleStep = 0.1;
-  for (let a = 0; a < params.turns * TWO_PI; a += angleStep) {
-    let r = params.spacing * a;
-    let x = r * cos(a);
-    let y = r * sin(a);
-    vertex(x, y);
-  }
-  endShape();
 }
 
 function drawShapeInsideBorder(shapeDrawingFunction) {
@@ -74,6 +65,15 @@ function drawRegistrationMark() {
   line(center - crosshairSize / 2, center, center + crosshairSize / 2, center); // Horizontal
   line(center, center - crosshairSize / 2, center, center + crosshairSize / 2); // Vertical
 }
+
+let params = {
+  turns: 5,
+  spacing: 10,
+  lineWeight: 2,
+  border: 50,
+  drawRegistrationMark: true,
+  exportSVG: function() { exportCurrentSVG('spiral.svg'); }
+};
 
 function setupGUI() {
   const gui = new dat.GUI();
