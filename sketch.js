@@ -82,8 +82,8 @@ function drawShapeInsideBorder(shapeDrawingFunction) {
 }
 
 function drawRegistrationMark() {
-  const circleSize = 30;
-  const crosshairSize = 50;
+  const circleSize = 25;
+  const crosshairSize = 40;
   const center = crosshairSize / 2;
 
   ellipse(center, center, circleSize, circleSize);
