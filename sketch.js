@@ -121,7 +121,7 @@ function setupGUI() {
   gui.add(params, 'drawRegistrationMark').name('Registration').onFinishChange(redrawOnFinish);
   
   // Add a button to randomize noiseSeed
-  gui.add(params, 'noiseSeed', 0, noisemax, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
+  // gui.add(params, 'noiseSeed', 0, noisemax, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
   gui.add({ randomize: () => { params.noiseSeed = floor(random(0, noisemax + 1)); redraw(); } }, 'randomize').name('Randomize Noise Seed');
   
   gui.add(params, 'exportSVG').name('Export SVG');
