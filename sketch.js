@@ -58,12 +58,12 @@ function draw() {
   noiseSeed(params.noiseSeed);
   strokeWeight(params.lineWeight);
 
-  // Draw registration mark first in file
+  drawShapeInsideBorder(drawSpiral);
+
+  // Draw registration mark last in file
   if (params.drawRegistrationMark) {
     drawRegistrationMark();
   }
-
-  drawShapeInsideBorder(drawSpiral);
 }
 
 function drawShapeInsideBorder(shapeDrawingFunction) {
