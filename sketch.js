@@ -21,6 +21,8 @@ function setup() {
 }
 
 function draw() {
+  strokeWeight(params.lineWeight);
+
   clear(); // clear canvas for SVG redraw
   drawSpiral();
 }
