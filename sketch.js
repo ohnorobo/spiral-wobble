@@ -6,6 +6,7 @@ let params = {
   spacing: 10,
   lineWeight: 2,
   border: 50,
+  drawRegistrationMark: true,
   exportSVG: function() { exportCurrentSVG('spiral.svg'); }
 };
 
@@ -63,12 +64,24 @@ function drawShapeInsideBorder(shapeDrawingFunction) {
   pop();
 }
 
+function drawRegistrationMark() {
+  const circleSize = 30;
+  const crosshairSize = 50;
+  const center = crosshairSize / 2;
+
+  ellipse(center, center, circleSize, circleSize);
+ 
+  line(center - crosshairSize / 2, center, center + crosshairSize / 2, center); // Horizontal
+  line(center, center - crosshairSize / 2, center, center + crosshairSize / 2); // Vertical
+}
+
 function setupGUI() {
   const gui = new dat.GUI();
   gui.add(params, 'turns', 1, 20, 1).name('Turns').onChange(redraw);
   gui.add(params, 'spacing', 1, 20, 1).name('Spacing').onChange(redraw);
   gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onChange(redraw);
   gui.add(params, 'border', 0, 100, 1).name('Border').onChange(redraw);
+  gui.add(params, 'drawRegistrationMark').name('Registration').onChange(redraw);
   gui.add(params, 'exportSVG').name('Export SVG');
   noLoop(); // only redraw when parameters change
 }
