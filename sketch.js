@@ -1,5 +1,6 @@
 const width = 600;
 const height = 600;
+const border = 50;
 
 let params = {
     turns: 5,
@@ -9,7 +10,7 @@ let params = {
   };
   
   function setup() {
-    const canvas = createCanvas(width, height, SVG);
+    const canvas = createCanvas(width + border*2, height + border*2, SVG);
     canvas.parent(select('div[p5]'));
 
     noFill();
@@ -28,12 +29,12 @@ let params = {
     // clip the shape inside the SVG border
     push();
     function mask() {
-      rect(0, 0, width, width)
+      rect(border, border, width, height)
     }
     clip(mask);
 
     // move to center
-    translate(width / 2, height / 2);
+    translate(width/2 + border, height/2 + border);
   
     beginShape();
     let angleStep = 0.1;
