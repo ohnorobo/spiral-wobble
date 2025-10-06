@@ -54,9 +54,9 @@ function setup() {
 }
 
 function draw() {
-  strokeWeight(params.lineWeight);
-
   clear(); // clear canvas for SVG redraw
+  noiseSeed(params.noiseSeed);
+  strokeWeight(params.lineWeight);
 
   drawShapeInsideBorder(drawSpiral);
 
@@ -114,15 +114,15 @@ function setupGUI() {
   gui.add(params, 'spacing', 0, 20, 1).name('Spacing').onFinishChange(redrawOnFinish);
   gui.add(params, 'stepLength', 1, 20, 1).name('Step Length').onFinishChange(redrawOnFinish);
   gui.add(params, 'lineWeight', 1, 10, 1).name('Line Weight').onFinishChange(redrawOnFinish);
-  gui.add(params, 'wobbleStrength', 0, 1000, 1).name('Wobble Strength').onFinishChange(redrawOnFinish);
+  gui.add(params, 'wobbleStrength', 0, 50, 1).name('Wobble Strength').onFinishChange(redrawOnFinish);
   gui.add(params, 'noiseScale', 0.001, 0.1, 0.001).name('Noise Scale').onFinishChange(redrawOnFinish);
+  
+  gui.add(params, 'border', 0, 100, 1).name('Border').onFinishChange(redrawOnFinish);
+  gui.add(params, 'drawRegistrationMark').name('Registration').onFinishChange(redrawOnFinish);
   
   // Add a button to randomize noiseSeed
   gui.add(params, 'noiseSeed', 0, noisemax, 1).name('Noise Seed (Current)').listen(); // Keep current value visible
   gui.add({ randomize: () => { params.noiseSeed = floor(random(0, noisemax + 1)); redraw(); } }, 'randomize').name('Randomize Noise Seed');
-  
-  gui.add(params, 'border', 0, 100, 1).name('Border').onFinishChange(redrawOnFinish);
-  gui.add(params, 'drawRegistrationMark').name('Registration').onFinishChange(redrawOnFinish);
   
   gui.add(params, 'exportSVG').name('Export SVG');
   noLoop(); // only redraw when parameters change
