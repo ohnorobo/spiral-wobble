@@ -81,7 +81,7 @@ function clipSVGPaths(origSvgElement) {
     // Create the clipping path and the content path in Paper.js.
     const clipPath = new paper.Path(clipPathData);
     // Calculate the geometric intersection. This is the "clipping" operation.
-    const intersection = path.intersect(clipPath);
+    const intersection = path.intersect(clipPath, { trace: false });
 
     // Get style attributes from the first original path to apply to the new one.
     const originalStyleSource = pathElements.length > 0 ? pathElements[0] : element;
