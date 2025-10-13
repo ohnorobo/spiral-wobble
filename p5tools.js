@@ -20,7 +20,7 @@ function exportCurrentSVG(filename = 'drawing.svg') {
   }
 }
 
-
+// Adapted from https://gist.github.com/akre54/4d9ace17fb27d0507a6c790be5047e3d
 function clipSVGPaths(origSvgElement) {
   // Create a deep clone of the SVG element to avoid modifying the original.
   const svgElement = origSvgElement.cloneNode(true);
